@@ -29,6 +29,8 @@ class GameLogic:
             self._won = True
         else:
             self._place_random()
+        self._check_if_game_over()
+        self._check_if_game_won()
 
     @staticmethod
     def shift_left(row, colum):
@@ -158,7 +160,6 @@ class GameLogic:
             if self._board[i][colum] != 0:
                 non_zero_index = i
                 break
-        print(non_zero_index, zero_index)
         return non_zero_index > zero_index
 
     def has_equal_values_in_column(self, colum):
@@ -261,25 +262,25 @@ class GameLogic:
 
     # movement functions
     def only_move_left(self):
-        if not self.is_left_move_possible():
-            return
         self.remove_spaces_left()
         self.merge_adjacent_equal_values_in_row_from_left()
         self.remove_spaces_left()
 
     def capture_move_left(self):
+        if not self.is_left_move_possible():
+            return
         self.only_move_left()
 
         self.handle_placement_if_not_game_over()
 
     def only_move_right(self):
-        if not self.is_right_move_possible():
-            return
         self.remove_spaces_right()
         self.merge_adjacent_equal_values_in_row_from_right()
         self.remove_spaces_right()
 
     def capture_move_right(self):
+        if not self.is_right_move_possible():
+            return
         self.only_move_right()
 
         self.handle_placement_if_not_game_over()
@@ -292,18 +293,20 @@ class GameLogic:
         self.remove_spaces_up()
 
     def capture_move_up(self):
+        if not self.is_up_move_possible():
+            return
         self.only_move_up()
 
         self.handle_placement_if_not_game_over()
 
     def only_move_down(self):
-        if not self.is_down_move_possible():
-            return
         self.remove_spaces_down()
         self.merge_adjacent_equal_values_in_column_down()
         self.remove_spaces_down()
 
     def capture_move_down(self):
+        if not self.is_down_move_possible():
+            return
         self.only_move_down()
 
         self.handle_placement_if_not_game_over()
@@ -338,6 +341,7 @@ class GameLogic:
                 elif self._board[i][j] == self._board[i][j + 1]:
                     return False
         self._over = True
+        print("coming here or not")
         return True
 
     # functions to aid testing

@@ -47,6 +47,8 @@ class Tile(pygame.sprite.Sprite):
                 self.font = pygame.font.SysFont('Comic Sans MS', 30)
             elif get_digits_of_number(self.value) > 2:
                 self.font = pygame.font.SysFont('Comic Sans MS', 40)
+            else:
+                self.font = pygame.font.SysFont('Comic Sans MS', 50)
             text = self.font.render(str(self.value), True, pygame.Color('black'))
             text_rect = text.get_rect(center=(self.rect.width / 2, self.rect.height / 2))
             self.image.blit(text, text_rect)
@@ -59,7 +61,6 @@ def get_game_tiles(game_height, game_width, game_logic_state=None):
     margin_top = (game_height - (100 * 4 + 10 * 3)) / 2
     tiles = []
     board = game_logic_state.get_current_board()
-    print(board)
     for row in range(4):
         for column in range(4):
             tiles.append(
